@@ -13,17 +13,17 @@ const userPrompt = () => {
             message: "Welcome to the readme generator. \nIf you do not need a section, please leave the response blank for that section. \nPlease enter the title of your project: "
         },
         {
-            type: "input", //open the users' prefered text editor to write longer answers. Close and save in the editor to save the answer
+            type: "editor", //open the users' prefered text editor to write longer answers. Close and save in the editor to save the answer
             name: "description",
             message: "Enter the description of your project: "
         },
         {
-            type: "input",
+            type: "editor",
             name: "installation",
             message: "Enter the installation instructions: "
         },
         {
-            type: "input",
+            type: "editor",
             name: "usage",
             message: "Enter the usage guidelines: "
         },
@@ -39,12 +39,12 @@ const userPrompt = () => {
             message: "Please list any contributors: "
         },
         {
-            type: "input",
+            type: "editor",
             name: "tests",
             message: "Please list any tests: "
         },
         {
-            type: "input",
+            type: "editor",
             name: "questions",
             message: "Please list any frequently asked questions"
         }
