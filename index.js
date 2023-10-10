@@ -10,20 +10,20 @@ const userPrompt = () => {
         {
             type: "input", //basic text input
             name: "title",
-            message: "Welcome to the readme generator. \nIf you do not need a section, please leave the response blank for that section, or enter 'None' in your response. \nPlease enter the title of your project: "
+            message: "Welcome to the readme generator. \nIf you do not need a section, please leave the response blank for that section. \nPlease enter the title of your project: "
         },
         {
-            type: "editor", //open the users' prefered text editor to write longer answers. Close and save in the editor to save the answer
+            type: "input", //open the users' prefered text editor to write longer answers. Close and save in the editor to save the answer
             name: "description",
             message: "Enter the description of your project: "
         },
         {
-            type: "editor",
+            type: "input",
             name: "installation",
             message: "Enter the installation instructions: "
         },
         {
-            type: "editor",
+            type: "input",
             name: "usage",
             message: "Enter the usage guidelines: "
         },
@@ -44,7 +44,7 @@ const userPrompt = () => {
             message: "Please list any tests: "
         },
         {
-            type: "editor",
+            type: "input",
             name: "questions",
             message: "Please list any frequently asked questions"
         }
@@ -63,36 +63,63 @@ function generateReadme(answers)
     //!TODO: Create readme generation logic.
     let earlyText = `# ${answers.title}\n \n`; //text before table of contents
     let lateText = ""; //text after table of contents
-    let contentsText = "";
-    if(answers.description.trim() != "" ||  answers.description.trim().toLowerCase() != "none")
+    let contentsText = ""; //used to hold the list of valid sections
+    //project description
+    if(answers.description.trim() != "")
     {
-        earlyText.concat(`## **Description**\n
-        \n
-        ${answers.description}\n
-        \n`);
-        contentsText.concat("* Description\n"); //appends description to the table of contents
+        console.log("Creating section: description");
+        earlyText = earlyText.concat(earlyText, `## **Description**\n
+        ${answers.description}\n`);
+        contentsText = contentsText + ("* Description\n"); //appends description to the table of contents
     }
-    if(answers.installation.trim() != "" ||  answers.installation.trim().toLowerCase() != "none")
+    //installation instructions
+    if(answers.installation.trim() != "")
     {
-        lateText.concat(`## **Installation Instructions**\n
-        \n
-        ${answers.installation}\n
-        \n`);
-        contentsText.concat("* Installation Instructions\n");
+        console.log("Creating section: installation");
+        lateText = lateText + (`## **Installation Instructions**\n
+        ${answers.installation}\n`);
+        contentsText = contentsText + ("* Installation Instructions\n");
     }
-    if(answers.usage.trim() != "" ||  answers.usage.trim().toLowerCase() != "none")
+    //usage requirements
+    if(answers.usage.trim() != "")
     {
-        lateText.concat(`## **Usage**\n
-        \n
-        ${answers.usage}\n
-        \n`); 
-        contentsText.concat("* Usage\n");
+        console.log("Creating section: usage");
+        lateText = lateText + (`## **Usage**\n
+        ${answers.usage}\n`);
+        contentsText = contentsText + ("* Usage\n");
     }
-    lateText.concat(`## **License**\n
-    \n
-    Using license: ${answers.license} License\n
-    \n`)
-    contentsText.concat("* License\n");
+    //license used (Always included)
+    console.log("Creating section: license");
+    lateText = lateText + (`## **License**\n
+    Using license: ${answers.license} License\n`);
+    contentsText = contentsText + ("* License\n");
+    //contributors
+    if(answers.contributors.trim() != "")
+    {
+        console.log("Creating section: contributors");
+        lateText = lateText + (`## **Contributors**\n
+        ${answers.contributors}\n`);
+        contentsText = contentsText + ("* Contributors\n");
+    }
+    //testing
+    if(answers.tests.trim() != "")
+    {
+        console.log("Creating section: Tests");
+        lateText = lateText + (`## **Tests**\n
+        ${answers.tests}\n`);
+        contentsText = contentsText + ("* Tests\n");
+    }
+    //questions
+    if(answers.questions.trim() != "")
+    {
+        console.log("Creating section: questions");
+        lateText = lateText + (`## **Questions**\n
+        ${answers.tests}\n`);
+        contentsText = contentsText + ("* Questions\n");
+    }
+    //finalising the generation
+    contentsText = `## **Table of Contents**\n
+    ${contentsText}`;
     const readmeText = earlyText + contentsText + lateText; //combine all texts together
     return readmeText; //returns the finalised string
 }
