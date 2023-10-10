@@ -1,4 +1,4 @@
-const inquirer = import("inquirer"); //inquirer for use in console
+const inquirer = require('inquirer'); //inquirer for use in console
 const fs = require('fs'); //file system support for writing files
 const util = require('util');
 
@@ -18,7 +18,7 @@ const userPrompt = () => {
             console.error(`Something went wrong \n + error`);
     });
 }
-function generateReadme()
+function generateReadme(answers)
 {
 
 }
