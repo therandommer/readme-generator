@@ -6,8 +6,29 @@ const userPrompt = () => {
     return inquirer.prompt([
         {
             type: "input",
-            name: "name",
-            message: "Hi there, write something"
+            name: "title",
+            message: "Welcome to the readme generator. \n Please enter the title of your project: "
+        },
+        {
+            type: "input",
+            name: "description",
+            message: "Enter the description of your project: "
+        },
+        {
+            type: "input",
+            name: "installation",
+            message: "Enter the installation instructions: "
+        },
+        {
+            type: "input",
+            name: "usage",
+            message: "Enter the usage guidelines: "
+        },
+        {
+            type: "list",
+            name: "license",
+            message: "Which license would you like to use?",
+            choices: ["MIT", "GPLv2", "Apache", "GPLv3", "Other"] //taken from the top github licenses
         }
     ])
     .catch((error) => {
@@ -21,15 +42,18 @@ const userPrompt = () => {
 }
 function generateReadme(answers)
 {
-
+    //!TODO: Create readme generation logic.
+    return answers;
 }
 const start = async () =>
 {
     console.log("Starting readme generator");
     try {
-        const answers = await userPrompt();
+        const answers = await userPrompt(); //gather prompts for generating the file
         console.log(`Current answers are: ${JSON.stringify(answers)}`);
-        const readme = generateReadme(answers);
+        const readme = generateReadme(answers); //generate the readme based on the results
+
+        //!TODO: Create write functionality.
     }
     catch (error) {
         console.error(error);
