@@ -4,11 +4,12 @@ const util = require('util');
 
 const userPrompt = () => {
     return inquirer.prompt([
-        "Hi there, write something"
+        {
+            type: "input",
+            name: "name",
+            message: "Hi there, write something"
+        }
     ])
-    .then((answers) => {
-        console.log(`You put: ${answers}`);
-    })
     .catch((error) => {
         if(error.isTtyError)
         {
@@ -27,6 +28,7 @@ const start = async () =>
     console.log("Starting readme generator");
     try {
         const answers = await userPrompt();
+        console.log(`Current answers are: ${JSON.stringify(answers)}`);
         const readme = generateReadme(answers);
     }
     catch (error) {
