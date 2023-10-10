@@ -29,5 +29,8 @@ const start = async () =>
         const answers = await userPrompt();
         const readme = generateReadme(answers);
     }
-}
+    catch (error) {
+        console.error(error);
+    }
+};
 start();
