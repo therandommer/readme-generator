@@ -61,65 +61,57 @@ const userPrompt = () => {
 function generateReadme(answers)
 {
     //!TODO: Create readme generation logic.
-    let earlyText = `# ${answers.title}\n \n`; //text before table of contents
+    let earlyText = `# ${answers.title}`; //text before table of contents
     let lateText = ""; //text after table of contents
     let contentsText = ""; //used to hold the list of valid sections
     //project description
     if(answers.description.trim() != "")
     {
         console.log("Creating section: description");
-        earlyText = earlyText.concat(earlyText, `## **Description**\n
-        ${answers.description}\n`);
-        contentsText = contentsText + ("* Description\n"); //appends description to the table of contents
+        earlyText = earlyText + (`\n## **Description**\n${answers.description}\n`); 
+        contentsText = contentsText + ("\n* Description"); //appends description to the table of contents
     }
     //installation instructions
     if(answers.installation.trim() != "")
     {
         console.log("Creating section: installation");
-        lateText = lateText + (`## **Installation Instructions**\n
-        ${answers.installation}\n`);
-        contentsText = contentsText + ("* Installation Instructions\n");
+        lateText = lateText + (`\n## **Installation Instructions**\n${answers.installation}\n`);
+        contentsText = contentsText + ("\n* Installation Instructions");
     }
     //usage requirements
     if(answers.usage.trim() != "")
     {
         console.log("Creating section: usage");
-        lateText = lateText + (`## **Usage**\n
-        ${answers.usage}\n`);
-        contentsText = contentsText + ("* Usage\n");
+        lateText = lateText + (`\n## **Usage**\n${answers.usage}\n`);
+        contentsText = contentsText + ("\n* Usage");
     }
     //license used (Always included)
     console.log("Creating section: license");
-    lateText = lateText + (`## **License**\n
-    Using license: ${answers.license} License\n`);
-    contentsText = contentsText + ("* License\n");
+    lateText = lateText + (`\n## **License**\nUsing license: ${answers.license} License\n`);
+    contentsText = contentsText + ("\n* License");
     //contributors
     if(answers.contributors.trim() != "")
     {
         console.log("Creating section: contributors");
-        lateText = lateText + (`## **Contributors**\n
-        ${answers.contributors}\n`);
-        contentsText = contentsText + ("* Contributors\n");
+        lateText = lateText + (`\n## **Contributors**\n${answers.contributors}\n`);
+        contentsText = contentsText + ("\n* Contributors");
     }
     //testing
     if(answers.tests.trim() != "")
     {
         console.log("Creating section: Tests");
-        lateText = lateText + (`## **Tests**\n
-        ${answers.tests}\n`);
-        contentsText = contentsText + ("* Tests\n");
+        lateText = lateText + (`\n## **Tests**\n${answers.tests}\n`);
+        contentsText = contentsText + ("\n* Tests");
     }
     //questions
     if(answers.questions.trim() != "")
     {
         console.log("Creating section: questions");
-        lateText = lateText + (`## **Questions**\n
-        ${answers.tests}\n`);
-        contentsText = contentsText + ("* Questions\n");
+        lateText = lateText + (`\n## **Questions**\n${answers.questions}\n`);
+        contentsText = contentsText + ("\n* Questions");
     }
     //finalising the generation
-    contentsText = `## **Table of Contents**\n
-    ${contentsText}`;
+    contentsText = `\n## **Table of Contents**\n${contentsText}`;
     const readmeText = earlyText + contentsText + lateText; //combine all texts together
     return readmeText; //returns the finalised string
 }
@@ -128,11 +120,10 @@ const start = async () =>
     console.log("Starting readme generator");
     try {
         const answers = await userPrompt(); //gather prompts for generating the file
-        //!Delete this log when file write is complete.
-        console.log(`Current answers are: ${JSON.stringify(answers)}`); //logs current responses to the console for testing purposes.
+        //console.log(`Current answers are: ${JSON.stringify(answers)}`); //logs current responses to the console for testing purposes.
         const readme = generateReadme(answers); //generate the readme based on the results
-        console.log(`The readme is this: ${readme}`);
-        //!TODO: Create write functionality.
+        //console.log(`The readme is this: ${readme}`);
+        await writeFile('README.md', readme); //writes the readme data to a file.
     }
     catch (error) {
         console.error(error);
